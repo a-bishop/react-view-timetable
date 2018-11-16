@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/a-bishop/react-view-timetable/precache-manifest.83884fcc78fc0e849b58169375d00697.js"
+  "/react-view-timetable/precache-manifest.50388fd92b4f57b3b5d47262cd1e4c5e.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/a-bishop/react-view-timetable/index.html", {
+workbox.routing.registerNavigationRoute("/react-view-timetable/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
