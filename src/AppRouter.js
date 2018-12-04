@@ -4,7 +4,7 @@ import MyCourses from './MyCourses';
 
 const AppRouter = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div>
       <Route path="/" exact component={MyCourses} />
       <Route key=":id" path="/section/:id" component={MyCourses} />
