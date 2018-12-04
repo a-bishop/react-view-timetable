@@ -7,7 +7,7 @@ const AppRouter = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <div>
       <Route path="/" exact component={MyCourses} />
-      <Route key=":id" path="/section/:id" component={MyCourses} />
+      <Route key=":id" path="/:id" component={MyCourses} />
       </div>
     </Router>
   );

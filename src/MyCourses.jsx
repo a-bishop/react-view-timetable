@@ -136,9 +136,9 @@ class MyCourses extends Component {
       <div className='myCourses'>
           <Title />
             <div className='sectionSelectors'>
-              <span><Link onClick={this.handleSectionChoice} to="/section/section-A">Section A</Link>  |</span>
-              <span> <Link onClick={this.handleSectionChoice} to="/section/section-B">Section B</Link> |</span>
-              <span> <Link onClick={this.handleSectionChoice} to="/section/section-C">Section C</Link></span>
+              <span><Link onClick={this.handleSectionChoice} to="/section-A">Section A</Link>  |</span>
+              <span> <Link onClick={this.handleSectionChoice} to="/section-B">Section B</Link> |</span>
+              <span> <Link onClick={this.handleSectionChoice} to="/section-C">Section C</Link></span>
             </div>
             {section}
             <div className='timetable'>
