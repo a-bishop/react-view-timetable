@@ -43,10 +43,11 @@ p {
   padding: 4px;
 }
 
-.tableElement:hover {
+.tableElement:hover{
   animation: pulse 0.3s linear 1;
   cursor: pointer;
 }
+
 @keyframes pulse{
   50%  {transform: scale(0.95);}
 }

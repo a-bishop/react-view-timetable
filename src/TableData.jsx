@@ -110,7 +110,6 @@ const TableData = (props) => {
   } 
 
   if (props.day !== null) {
-    
     const tableDataMainStyle = {
       backgroundColor: `rgb(${props.color})`,
       fontSize: '14px'
@@ -139,6 +138,7 @@ const TableData = (props) => {
           ${convertEndTime(props.endTime)}`}
           onMouseOver={props.onMouseOver}
           onMouseLeave={props.onMouseLeave}
+          onClick={props.onClick}
         >
           {props.course} <br/> 
           {props.startTime} to {props.endTime} 

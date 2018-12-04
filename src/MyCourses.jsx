@@ -132,11 +132,8 @@ class MyCourses extends Component {
                 startTime={course.StartTime} 
                 endTime={course.EndTime} 
                 room={course.Room}
-                onMouseOver={() => this.onTableMouseOver(course.ID)}
-                onTouchStart={() => this.onTableMouseOver(course.ID)}
-                onMouseLeave={this.onTableMouseLeave}
-                onTouchEnd={this.onTableMouseLeave}
-                onClick=""
+                onMouseOver={() => this.onTableMouseOver(course.ID)}               
+                onClick={() => this.onTableMouseOver(course.ID)}
                 display={this.state.display}
               />
             )} 
