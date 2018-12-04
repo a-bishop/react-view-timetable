@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Title from './Title';
 import TableData from './TableData';
 import './MyCourses.css';
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class MyCourses extends Component {
   constructor(props) {
@@ -13,13 +15,23 @@ class MyCourses extends Component {
     };
 
     this.onTableMouseOver = this.onTableMouseOver.bind(this);
+    this.handleSectionChoice = this.handleSectionChoice.bind(this);
+  }
+
+  handleHTTPErrors = (response) => {
+    if (!response.ok) throw Error(response.status +
+      ': ' + response.statusText);
+    return response;
   }
 
   componentDidMount() {
-    fetch('https://my-json-server.typicode.com/a-bishop/timetable-server/Courses')
+    console.log(this.props.match);
+    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
     .then(response=> this.handleHTTPErrors(response))
     .then(response=> response.json())
     .then(result=> {
+      console.log(result);
       this.setState({
         courses: result,
         display: {},
@@ -34,15 +46,40 @@ class MyCourses extends Component {
           })
       });
     })
+    .then(() => this.props.history.push(`/section/${this.props.match.params.id}`))
     .catch(error=> {
       console.log(error);
     });
   }
 
-  handleHTTPErrors = (response) => {
-    if (!response.ok) throw Error(response.status +
-      ': ' + response.statusText);
-    return response;
+  handleSectionChoice() {
+    console.log("PROPS", this.props);
+    console.log("STATE", this.state);
+    console.log("LAST PAGE", this.props.history.location.pathname);
+    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
+    .then(response=> this.handleHTTPErrors(response))
+    .then(response=> response.json())
+    .then(result=> {
+      console.log(result);
+      this.setState({
+        courses: result,
+        display: {},
+        color: {}
+      });
+      this.state.courses.forEach((course) => {
+          let hash = this.hashCode(course.Course);
+          let color = this.colorGenerator(hash);
+          let courseId = course.ID;
+          this.setState({
+            color: {...this.state.color, [courseId]: color}
+          })
+      });
+    })
+    .then(() => this.props.history.push(`${this.props.match.url}`))
+    .catch(error=> {
+      console.log(error);
+    });
   }
 
   onTableMouseOver = (id) => {
@@ -87,9 +124,23 @@ class MyCourses extends Component {
   }
 
   render() {
+    let section = <p className="sectionTitle">----</p>;
+    if (this.props.match.params.id === "section-A") {
+      section = <p className="sectionTitle">Section A</p>
+    } else if (this.props.match.params.id === "section-B") {
+      section = <p className="sectionTitle">Section B</p>
+    } else if (this.props.match.params.id === "section-C") {
+      section = <p className="sectionTitle">Section C</p>
+    } 
     return (
       <div className='myCourses'>
           <Title />
+            <div className='sectionSelectors'>
+              <span><Link onClick={this.handleSectionChoice} to="/section/section-A">Section A</Link>  |</span>
+              <span> <Link onClick={this.handleSectionChoice} to="/section/section-B">Section B</Link> |</span>
+              <span> <Link onClick={this.handleSectionChoice} to="/section/section-C">Section C</Link></span>
+            </div>
+            {section}
             <div className='timetable'>
             <section className='timeWrapper'>
               <div>8:30</div>
@@ -132,7 +183,8 @@ class MyCourses extends Component {
                 startTime={course.StartTime} 
                 endTime={course.EndTime} 
                 room={course.Room}
-                onMouseOver={() => this.onTableMouseOver(course.ID)}               
+                onMouseOver={() => this.onTableMouseOver(course.ID)}
+                onMouseLeave={this.onTableMouseLeave}             
                 onClick={() => this.onTableMouseOver(course.ID)}
                 display={this.state.display}
               />
@@ -143,4 +195,4 @@ class MyCourses extends Component {
   }
 }
 
-export default MyCourses;
+export default withRouter(MyCourses);

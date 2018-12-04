@@ -7,6 +7,21 @@
   font-variant: small-caps;
   width: 1100px;
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.sectionSelectors {
+  margin-bottom: 20px;
+  font-variant: small-caps;
+  width: 1100px;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin-bottom: 20px;
+  font-variant: small-caps;
+  width: 1100px;
+  text-align: center;
 }
 
 .timetable {
@@ -49,7 +64,7 @@ p {
 }
 
 @keyframes pulse{
-  50%  {transform: scale(0.95);}
+  50%  {transform: scale(0.97);}
 }
 
 .timeWrapper div:nth-of-type(1) {

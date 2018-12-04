@@ -5,7 +5,7 @@ const Title = () => {
 
   return (
     <div> 
-      <h2 className="titleStyle">My Camosun Course Timetable</h2>
+      <h2 className="titleStyle">Camosun ICS Year 2 Timetables</h2>
     </div>
   )
 }
