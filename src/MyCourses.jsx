@@ -15,7 +15,6 @@ class MyCourses extends Component {
     };
 
     this.onTableMouseOver = this.onTableMouseOver.bind(this);
-    this.handleSectionChoice = this.handleSectionChoice.bind(this);
   }
 
   handleHTTPErrors = (response) => {
@@ -25,9 +24,9 @@ class MyCourses extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match);
-    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
-    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
+    console.log(this.props.match.params.id);
+    console.log(`https://my-json-server.typicode.com/a-bishop/${this.props.match.params.id}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/${this.props.match.params.id}/Courses`)
     .then(response=> this.handleHTTPErrors(response))
     .then(response=> response.json())
     .then(result=> {
@@ -46,40 +45,14 @@ class MyCourses extends Component {
           })
       });
     })
-    .then(() => this.props.history.push(`/section/${this.props.match.params.id}`))
+    .then(() => this.props.history.push(`/${this.props.match.params.id}`))
     .catch(error=> {
       console.log(error);
     });
   }
 
-  handleSectionChoice() {
-    console.log("PROPS", this.props);
-    console.log("STATE", this.state);
-    console.log("LAST PAGE", this.props.history.location.pathname);
-    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
-    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
-    .then(response=> this.handleHTTPErrors(response))
-    .then(response=> response.json())
-    .then(result=> {
-      console.log(result);
-      this.setState({
-        courses: result,
-        display: {},
-        color: {}
-      });
-      this.state.courses.forEach((course) => {
-          let hash = this.hashCode(course.Course);
-          let color = this.colorGenerator(hash);
-          let courseId = course.ID;
-          this.setState({
-            color: {...this.state.color, [courseId]: color}
-          })
-      });
-    })
-    .then(() => this.props.history.push(`${this.props.match.url}`))
-    .catch(error=> {
-      console.log(error);
-    });
+  updateProps() {
+    this.forceUpdate();
   }
 
   onTableMouseOver = (id) => {
@@ -125,20 +98,20 @@ class MyCourses extends Component {
 
   render() {
     let section = <p className="sectionTitle">----</p>;
-    if (this.props.match.params.id === "section-A") {
+    if (this.props.match.params.id === "timetable-server-section-A") {
       section = <p className="sectionTitle">Section A</p>
-    } else if (this.props.match.params.id === "section-B") {
+    } else if (this.props.match.params.id === "timetable-server-section-B") {
       section = <p className="sectionTitle">Section B</p>
-    } else if (this.props.match.params.id === "section-C") {
+    } else if (this.props.match.params.id === "timetable-server-section-C") {
       section = <p className="sectionTitle">Section C</p>
     } 
     return (
       <div className='myCourses'>
           <Title />
             <div className='sectionSelectors'>
-              <span><Link onClick={this.handleSectionChoice} to="/section-A">Section A</Link>  |</span>
-              <span> <Link onClick={this.handleSectionChoice} to="/section-B">Section B</Link> |</span>
-              <span> <Link onClick={this.handleSectionChoice} to="/section-C">Section C</Link></span>
+              <span><Link onClick={this.updateProps} to="/timetable-server-section-A">Section A</Link>  |</span>
+              <span> <Link onClick={this.updateProps} to="/timetable-server-section-B">Section B</Link> |</span>
+              <span> <Link onClick={this.updateProps} to="/timetable-server-section-C">Section C</Link></span>
             </div>
             {section}
             <div className='timetable'>
