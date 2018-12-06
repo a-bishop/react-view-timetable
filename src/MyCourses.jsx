@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Title from './Title';
 import TableData from './TableData';
 import './MyCourses.css';
-import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 class MyCourses extends Component {
   constructor(props) {
@@ -11,10 +9,12 @@ class MyCourses extends Component {
     this.state = {
       courses: [],
       display: {},
-      color: {}
+      color: {},
+      section: "section-A"
     };
 
     this.onTableMouseOver = this.onTableMouseOver.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   handleHTTPErrors = (response) => {
@@ -24,9 +24,8 @@ class MyCourses extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id);
-    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
-    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
+    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.state.section}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.state.section}/Courses`)
     .then(response=> this.handleHTTPErrors(response))
     .then(response=> response.json())
     .then(result=> {
@@ -45,15 +44,17 @@ class MyCourses extends Component {
           })
       });
     })
-    .then(() => this.props.history.push(`/${this.props.match.params.id}`))
     .catch(error=> {
       console.log(error);
     });
   }
 
-  fetchData() {
-    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
-    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
+  fetchData(e) {
+    this.setState({
+      section: e.target.value
+    }, () => {
+    console.log(this.state.section);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.state.section}/Courses`)
     .then(response=> this.handleHTTPErrors(response))
     .then(response=> response.json())
     .then(result=> {
@@ -72,10 +73,10 @@ class MyCourses extends Component {
           })
       });
     })
-    .then(() => this.props.history.push(`/${this.props.match.params.id}`))
     .catch(error=> {
       console.log(error);
     });
+  })
   }
 
   onTableMouseOver = (id) => {
@@ -121,20 +122,20 @@ class MyCourses extends Component {
 
   render() {
     let section = <p className="sectionTitle">----</p>;
-    if (this.props.match.params.id === "section-A") {
+    if (this.state.section === "section-A") {
       section = <p className="sectionTitle">Section A</p>
-    } else if (this.props.match.params.id === "section-B") {
+    } else if (this.state.section === "section-B") {
       section = <p className="sectionTitle">Section B</p>
-    } else if (this.props.match.params.id === "section-C") {
+    } else if (this.state.section === "section-C") {
       section = <p className="sectionTitle">Section C</p>
     } 
     return (
       <div className='myCourses'>
           <Title />
             <div className='sectionSelectors'>
-              <span><Link onClick={this.fetchData} to="/section-A">Section A</Link>  |</span>
-              <span> <Link onClick={this.fetchData} to="/section-B">Section B</Link> |</span>
-              <span> <Link onClick={this.fetchData} to="/section-C">Section C</Link></span>
+              <span><button onClick={this.fetchData} value="section-A">Section A</button></span>
+              <span> <button onClick={this.fetchData} value="section-B">Section B</button></span>
+              <span> <button onClick={this.fetchData} value="section-C">Section C</button></span>
             </div>
             {section}
             <div className='timetable'>
@@ -191,4 +192,4 @@ class MyCourses extends Component {
   }
 }
 
-export default withRouter(MyCourses);
+export default MyCourses;
