@@ -51,8 +51,31 @@ class MyCourses extends Component {
     });
   }
 
-  updateProps() {
-    this.forceUpdate();
+  fetchData() {
+    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
+    .then(response=> this.handleHTTPErrors(response))
+    .then(response=> response.json())
+    .then(result=> {
+      console.log(result);
+      this.setState({
+        courses: result,
+        display: {},
+        color: {}
+      });
+      this.state.courses.forEach((course) => {
+          let hash = this.hashCode(course.Course);
+          let color = this.colorGenerator(hash);
+          let courseId = course.ID;
+          this.setState({
+            color: {...this.state.color, [courseId]: color}
+          })
+      });
+    })
+    .then(() => this.props.history.push(`/${this.props.match.params.id}`))
+    .catch(error=> {
+      console.log(error);
+    });
   }
 
   onTableMouseOver = (id) => {
@@ -98,20 +121,20 @@ class MyCourses extends Component {
 
   render() {
     let section = <p className="sectionTitle">----</p>;
-    if (this.props.match.params.id === "timetable-server-section-A") {
+    if (this.props.match.params.id === "section-A") {
       section = <p className="sectionTitle">Section A</p>
-    } else if (this.props.match.params.id === "timetable-server-section-B") {
+    } else if (this.props.match.params.id === "section-B") {
       section = <p className="sectionTitle">Section B</p>
-    } else if (this.props.match.params.id === "timetable-server-section-C") {
+    } else if (this.props.match.params.id === "section-C") {
       section = <p className="sectionTitle">Section C</p>
     } 
     return (
       <div className='myCourses'>
           <Title />
             <div className='sectionSelectors'>
-              <span><Link onClick={this.updateProps} to="/section-A">Section A</Link>  |</span>
-              <span> <Link onClick={this.updateProps} to="/section-B">Section B</Link> |</span>
-              <span> <Link onClick={this.updateProps} to="/section-C">Section C</Link></span>
+              <span><Link onClick={this.fetchData} to="/section-A">Section A</Link>  |</span>
+              <span> <Link onClick={this.fetchData} to="/section-B">Section B</Link> |</span>
+              <span> <Link onClick={this.fetchData} to="/section-C">Section C</Link></span>
             </div>
             {section}
             <div className='timetable'>
