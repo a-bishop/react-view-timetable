@@ -25,8 +25,8 @@ class MyCourses extends Component {
 
   componentDidMount() {
     console.log(this.props.match.params.id);
-    console.log(`https://my-json-server.typicode.com/a-bishop/${this.props.match.params.id}/Courses`);
-    fetch(`https://my-json-server.typicode.com/a-bishop/${this.props.match.params.id}/Courses`)
+    console.log(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`);
+    fetch(`https://my-json-server.typicode.com/a-bishop/timetable-server-${this.props.match.params.id}/Courses`)
     .then(response=> this.handleHTTPErrors(response))
     .then(response=> response.json())
     .then(result=> {
@@ -109,9 +109,9 @@ class MyCourses extends Component {
       <div className='myCourses'>
           <Title />
             <div className='sectionSelectors'>
-              <span><Link onClick={this.updateProps} to="/timetable-server-section-A">Section A</Link>  |</span>
-              <span> <Link onClick={this.updateProps} to="/timetable-server-section-B">Section B</Link> |</span>
-              <span> <Link onClick={this.updateProps} to="/timetable-server-section-C">Section C</Link></span>
+              <span><Link onClick={this.updateProps} to="/section-A">Section A</Link>  |</span>
+              <span> <Link onClick={this.updateProps} to="/section-B">Section B</Link> |</span>
+              <span> <Link onClick={this.updateProps} to="/section-C">Section C</Link></span>
             </div>
             {section}
             <div className='timetable'>
