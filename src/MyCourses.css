@@ -1,10 +1,21 @@
 button {
-  height: 25px;
+  height: 30px;
   width: 100px;
   margin: 0 5px;
   background-color: gainsboro;
   font-variant: small-caps;
+  font-size: 14px;
   border-radius: 6px;
+  box-shadow: 2px 5px rgb(92, 92, 92);
+}
+
+button:hover {
+  background-color: rgb(148, 148, 148);
+}
+
+button:active {
+  box-shadow: 2px 0 rgb(92, 92, 92);
+  transform: translateY(5px);
 }
 
 .myCourses {
@@ -31,6 +42,7 @@ button {
   font-variant: small-caps;
   width: 1100px;
   text-align: center;
+  font-size: 22px;
 }
 
 .timetable {
