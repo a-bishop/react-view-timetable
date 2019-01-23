@@ -14,8 +14,7 @@ button:hover {
 }
 
 button:active {
-  box-shadow: 2px 0 rgb(92, 92, 92);
-  transform: translateY(5px);
+  transform: translateY(2px);
 }
 
 .myCourses {
