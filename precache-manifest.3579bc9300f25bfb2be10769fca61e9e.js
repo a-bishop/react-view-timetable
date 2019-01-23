@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/react-view-timetable/static/css/main.f629ecc4.chunk.css"
   },
   {
-    "revision": "165510da44a020b3b10e3bd29a94ccbf",
+    "revision": "8d8dd5218171258271ca2e681cf262f5",
     "url": "/react-view-timetable/index.html"
   }
 ];
